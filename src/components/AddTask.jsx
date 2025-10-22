@@ -4,14 +4,14 @@ import { Input } from './ui/input'
 import { Button } from './ui/button'
 import { Plus } from 'lucide-react'
 import { toast } from 'sonner'
-import axios from 'axios'
+import api from '@/lib/axios'
 
 const AddTask = ({ handleNewTaskAdded }) => {
     const [newTaskTitle, setNewTaskTitle] = useState('')
     const addTask = async () => {
         if (newTaskTitle.trim()) {
             try {
-                await axios.post('http://localhost:5001/api/tasks', {
+                await api.post('/tasks', {
                     title: newTaskTitle,
                 })
                 toast.success(`Added task ${newTaskTitle} successfully.`)
@@ -50,6 +50,7 @@ const AddTask = ({ handleNewTaskAdded }) => {
                     size='xl'
                     className='px-6'
                     onClick={addTask}
+                    disabled={!newTaskTitle.trim()}
                 >
                     <Plus className='size-5' />
                     Add
